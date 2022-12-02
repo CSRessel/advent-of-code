@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <meta charset="utf-8"/>
+    <title>Advent of Code Template</title>
+    <nav style="display: flex; font-size: x-large; justify-content: center;">
+        <input id="problem-number" style="width: 48px;" type="number">
+        &nbsp;&nbsp;
+        <a id="problem-link" target="_blank">Problem Link</a>
+        &nbsp;&nbsp;
+        <a id="problem-link-input" target="_blank">Problem Input Link</a>
+    </nav>
+
+    <body>
+        <br/>
+        <div style="display: flex; justify-content: center;">
+            <textarea id="problem-string" style="height: 80vh; white-space: pre-wrap; width: 95vw;"></textarea>
+        </div>
+    </body>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.js"
+        integrity="sha256-TARWG+/fZTrvAXpCrFrd9o6pQ838pr3uXOBOBOgTn1Q="
+        crossorigin="anonymous"
+    ></script>
+    <script
+        src="https://dagrejs.github.io/project/graphlib/v2.1.3/graphlib.js"
+        integrity="sha256-IgGkxMDLIeelf+uP9iuetZyq3ASL6dwXx5zT2Znz6J8="
+        crossorigin="anonymous"
+    ></script>
+    <script>
+        var input = ""
+        var numberEl = document.getElementById("problem-number");
+        var linkProblemEl = document.getElementById("problem-link");
+        var linkInputEl = document.getElementById("problem-link-input");
+        var inputEl = document.getElementById('problem-string');
+
+        // event handlers for the inputs
+        inputEl.onchange = () => {
+            input = inputEl.value.trim();
+        };
+        numberEl.onchange = (ev) => {
+            linkProblemEl.href = numberEl.value ? `https://adventofcode.com/2022/day/${ev.target.value}` : "#";
+            linkInputEl.href = numberEl.value ? `https://adventofcode.com/2022/day/${ev.target.value}/input` : "#";
+        };
+
+        // first time call for prefilled form values
+        inputEl.onchange({});
+        numberEl.onchange({ target: { value: numberEl.value }});
+    </script>
+</html>
