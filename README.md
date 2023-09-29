@@ -21,7 +21,7 @@ using whatever language/tools feels most appropriate :)
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2022 - 24 ⭐
+  2022 - 26 ⭐
 </h1>
 <a href="2022/01/soln_calories.py">
   <img src="assets/2022/01.png" width="161px">
@@ -40,6 +40,9 @@ using whatever language/tools feels most appropriate :)
 </a>
 <a href="2022/06/soln_markers.js">
   <img src="assets/2022/06.png" width="161px">
+</a>
+<a href="2022/07/07.rs">
+  <img src="assets/2022/07.png" width="161px">
 </a>
 <a href="2022/10/soln_pixels.js">
   <img src="assets/2022/10.png" width="161px">
