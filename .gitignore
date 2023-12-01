@@ -1,5 +1,6 @@
 .gitconfig
 input
+input.bonus
 
 # don't track AoCTiles scripts or cookie token
 session.cookie
