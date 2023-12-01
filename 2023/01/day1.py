@@ -1,21 +1,19 @@
 import re
 
-TEST = """
-1abc2
-pqr3stu8vwx
-a1b2c3d4e5f
-treb7uchet
-"""
+TEST = """1abc2
+       pqr3stu8vwx
+       a1b2c3d4e5f
+       treb7uchet
+       """
 
-TEST_BONUS = """
-two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineightseven2
-zoneeight234
-7pqrstsixteen
-"""
+TEST_BONUS = """two1nine
+             eightwothree
+             abcone2threexyz
+             xtwone3four
+             4nineightseven2
+             zoneeight234
+             7pqrstsixteen
+             """
 
 def clean_input(input):
     return input.strip().splitlines()
@@ -35,7 +33,7 @@ WORD_MAP = {
     'seven': '7',
     'eight': '8',
     'nine': '9'
-    }
+}
 def lfind_word_or_digi(s):
     matchgroup = re.match(r'.*?([1-9]|one|two|three|four|five|six|seven|eight|nine)', s)
     if matchgroup:
