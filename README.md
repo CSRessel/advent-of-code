@@ -1,5 +1,3 @@
-# [Advent of Code 2022](https://adventofcode.com/2022/)
-
 ```
      *        .-""-.  *
  *        *  /___., \       *
@@ -14,8 +12,19 @@ ___( \ __.\-,),,)________________
     \ )
 ```
 
-Speed running the advent of code problems each day,
-using whatever language/tools feels most appropriate :)
+# [Advent of Code 2023](https://adventofcode.com/)
+
+Haven't finalized what I want out of this year... Tenatively:
+
+- [ ] Familiarize with some [more interesting Python language features](https://www.youtube.com/playlist?list=PLdQruVCKu10k5p2lK04KJuKEeUuXOeH6F)
+- [ ] Setup a convenient command runner for scaffolding/testing/solving, decoupled from languages (like [`just`](https://just.systems/) or [`task`](https://taskfile.dev/))
+- [ ] Solve 50 ⭐'s (not sure if I'm that invested or not, we'll see)
+
+# [Advent of Code 2022](https://adventofcode.com/2022/)
+
+- [x] Speedrun some of the problems in Javascript/TypeScript
+- [x] Implement at least one non-trivial rust solution
+- [x] Solve 25 ⭐'s
 
 ## Days
 
