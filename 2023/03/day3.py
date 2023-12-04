@@ -37,7 +37,7 @@ def get_number_surrounding_idx(data, row, col):
             num = "".join([c for _, c in each_contiugous_num])
             return int(num)
 
-    DEBUG and print(f"DEBUG: no number found at {row}, {col}")
+    print(f"DEBUG: no number found at {row}, {col}") if DEBUG else None
     return None
 
 def has_neighboring_symbol(vertical_neighbors, i):
@@ -55,9 +55,9 @@ def get_two_neighboring_numbers(vertical_neighbors, i):
     col_right_neighbor = vertical_neighbors[i + 1]
 
     cols = [col_left_neighbor, col_self_neighbor, col_right_neighbor]
-    DEBUG and print(f"DEBUG: col orientation {cols}")
+    print(f"DEBUG: col orientation {cols}") if DEBUG else None
     rows = list(zip(*cols)) # transposed
-    DEBUG and print(f"DEBUG: row orientation {rows}")
+    print(f"DEBUG: row orientation {rows}") if DEBUG else None
     row_top, row_mid, row_bot = rows
     row_top_neighbor = find_idx(row_top, lambda x: x.isdigit())
     row_mid_neighbor = find_idx(row_mid, lambda x: x.isdigit())
@@ -156,14 +156,17 @@ def part2(input):
         for gear_idx, c in enumerate(list(line)):
             if c != "*":
                 continue
-            DEBUG and print(f"DEBUG: found gear at {i}, {gear_idx}, with neighbors:")
+            print(f"DEBUG: found gear at {i}, {gear_idx}, with neighbors:") if DEBUG else None
             neighbor_one, neighbor_two = get_two_neighboring_numbers(vertical_neighbors, gear_idx)
             if neighbor_one is not None and neighbor_two is not None:
                 x1, y1 = neighbor_one
                 x2, y2 = neighbor_two
-                sum += \
-                    get_number_surrounding_idx(data, i + x1 - 1, gear_idx + y1 - 2) * \
-                    get_number_surrounding_idx(data, i + x2 - 1, gear_idx + y2 - 2)
+                # -2 because we added an empty column to our vertical_neighbors,
+                # not present in the full data variable
+                num1 = get_number_surrounding_idx(data, i + x1 - 1, gear_idx + y1 - 2)
+                num2 = get_number_surrounding_idx(data, i + x2 - 1, gear_idx + y2 - 2)
+                if num1 is not None and num2 is not None:
+                    sum += num1 * num2
 
     return sum
 

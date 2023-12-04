@@ -79,7 +79,7 @@ def main():
     print("Part 1")
     print(ans)
 
-    with open('input.bonus') as f:
+    with open('input') as f:
         fileinput = f.read()
     ans = solve_bonus(fileinput)
     print("Part 2")
