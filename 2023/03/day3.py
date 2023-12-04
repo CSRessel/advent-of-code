@@ -44,29 +44,29 @@ def split_row_to_indexed_numbers(line: str) -> list[tuple[int, int, str]]:
     # return tuples like: ( start_idx, end_idx, number_str)
     return [(number_chars_group[0][0], number_chars_group[-1][0] + 1, "".join(c for _, c in number_chars_group))
             for number_chars_group in contiugous_numbers
-            if not DEBUG or len(number_chars_group) > 0 and all(len(e) == 2 for e in number_chars_group) # unnecessary invariant for debugging
+            if not DEBUG or len(number_chars_group) > 0 and all(len(e) == 2 for e in number_chars_group) # unnecessary invariant just for debugging
             ]
 
 def get_number_surrounding_idx(data: List[str], row: int, col: int) -> Optional[int]:
     indexed_nums = split_row_to_indexed_numbers(data[row])
     number = find_ele(indexed_nums, lambda x: x[0] <= col < x[1])
 
-    if number is not None:
-        print(f"DEBUG: found number at {row}, {col}: {number}") if DEBUG else None
-        return int(number[2])
+    if number is None:
+        print(f"DEBUG: no number found at {row}, {col}") if DEBUG else None
+        return None
+    return int(number[2]) if number is not None else None
 
-    print(f"DEBUG: no number found at {row}, {col}") if DEBUG else None
-    return None
+def has_neighboring_symbol(vertical_neighbors: List[VerticalNeighbor], i: int) -> bool:
+    return any(not neighbor.isdigit() and neighbor != "."
+               for neighbor in chain(vertical_neighbors[i],
+                                     vertical_neighbors[i + 1],
+                                     vertical_neighbors[i - 1]
+                                     )
+               )
 
-def has_neighboring_symbol(vertical_neighbors: List[tuple[str, str, str]], i: int) -> bool:
-    for neighbor in chain(vertical_neighbors[i], vertical_neighbors[i + 1], vertical_neighbors[i - 1]):
-        if not neighbor.isdigit() and neighbor != ".":
-            return True
-    return False
-
-def get_two_neighboring_numbers(vertical_neighbors, i) -> tuple[Optional[tuple[int, int]], Optional[tuple[int, int]]]:
+def get_two_neighboring_numbers(vertical_neighbors: List[VerticalNeighbor], i) -> tuple[Optional[tuple[int, int]], Optional[tuple[int, int]]]:
     # returns 0 indexed instead of -1 indexed, which is kind of weird
-    # given that it's searching from i - 1 to i + 1
+    # given that it's searching from i - 1 to i + 1 and j - 1 to j + 1
 
     col_left_neighbor = vertical_neighbors[i - 1]
     col_self_neighbor = vertical_neighbors[i]
@@ -92,23 +92,23 @@ def get_two_neighboring_numbers(vertical_neighbors, i) -> tuple[Optional[tuple[i
         return (0, row_top_neighbor), (2, row_bot_neighbor)
 
     row_idx = find_idx(rows, lambda x: any(c.isdigit() for c in x))
-    # all in one line case
-    if row_idx is not None:
-        row = rows[row_idx]
-        #line = vertical_neighbors[i + row_idx - 1]
-        if row[0].isdigit() and not row[1].isdigit() and row[2].isdigit():
-            # if there are two numbers on the same line, they must be on opposite sides of the gear
-            return (row_idx, 0), (row_idx, 2)
-        else:
-            # only one neighbor case
-            col_idx = find_idx(row, lambda x: x.isdigit())
-            if col_idx is None:
-                assert False, "could not find digit in row already verified as having digit"
-            return (row_idx, col_idx), None
 
     # no neighboring number case
-    assert row_top_neighbor == None and row_mid_neighbor == None and row_bot_neighbor == None
-    return None, None
+    if row_idx is None:
+        assert row_top_neighbor == None and row_mid_neighbor == None and row_bot_neighbor == None
+        return None, None
+
+    # all in one line case
+    row = rows[row_idx]
+    if row[0].isdigit() and not row[1].isdigit() and row[2].isdigit():
+        # if there are two numbers on the same line, they must be on opposite sides of the gear
+        return (row_idx, 0), (row_idx, 2)
+    else:
+        # only one neighbor case
+        col_idx = find_idx(row, lambda x: x.isdigit())
+        if col_idx is None:
+            assert False, "could not find digit in row already verified as having digit"
+        return (row_idx, col_idx), None
 
 def row_pad(data):
     # pad top and bottom with empty rows
@@ -129,7 +129,7 @@ def part1(input):
     for i, line in enumerate(data):
         if i == 0 or i == len(data) - 1:
             continue
-        vertical_neighbors = list(zip(list(data[i - 1]), list(line), list(data[i + 1])))
+        vertical_neighbors: List[VerticalNeighbor] = list(zip(list(data[i - 1]), list(line), list(data[i + 1])))
 
         # so for a line like this:
         # ".467..114..."
@@ -137,22 +137,11 @@ def part1(input):
         # [('.', '.', '.'), ('.', '4', '.'), ('.', '6', '.'), ('.', '7', '.'), ('.', '.', '*'), ('.', '.', '.'), ('.', '1', '.'), ('.', '1', '.'), ('.', '4', '.'), ('.', '.', '.'), ('.', '.', '.'), ('.', '.', '.')]
 
         # for each number in the line, check if it neighbors a symbol
-        part_number_evidence = [c.isdigit() and has_neighboring_symbol(vertical_neighbors, i) for i, c in enumerate(list(line))]
-        # like so:
-        # [False, False, False, True, False, False, False, False, False, False, False, False]
-
-        indexed_chars = list(enumerate(list(line)))
-        # like so:
-        # [(0, '.'), (1, '4'), (2, '6'), (3, '7'), (4, '.'), (5, '.'), (6, '1'), (7, '1'), (8, '4'), (9, '.'), (10, '.'), (11, '.')]
-        contiugous_numbers = [list(g) for k, g in groupby(indexed_chars, lambda x: x[1].isdigit()) if k]
-        # like so:
-        # [[(1, '4'), (2, '6'), (3, '7')], [(6, '1'), (7, '1'), (8, '4')]]
-        # representing indices for: [ 467, 114 ]
-
-        for each_contiugous_num in contiugous_numbers:
-            if any(part_number_evidence[i] for i, _ in each_contiugous_num):
-                num = "".join([c for _, c in each_contiugous_num])
+        indexed_numbers = split_row_to_indexed_numbers(line)
+        for start_idx, end_idx, num in indexed_numbers:
+            if any(has_neighboring_symbol(vertical_neighbors, i) for i in range(start_idx, end_idx)):
                 sum += int(num)
+
     return sum
 
 def part2(input):
@@ -163,23 +152,22 @@ def part2(input):
     for i, line in enumerate(data):
         if i == 0 or i == len(data) - 1:
             continue
-        vertical_neighbors = list(zip(list(data[i - 1]), list(line), list(data[i + 1])))
+        vertical_neighbors: List[VerticalNeighbor] = list(zip(list(data[i - 1]), list(line), list(data[i + 1])))
 
         # for each gear in the line, check if it neighbors a number
         for gear_idx, c in enumerate(list(line)):
             if c != "*":
                 continue
-            print(f"DEBUG: found gear at {i}, {gear_idx}, with neighbors:") if DEBUG else None
             neighbor_one, neighbor_two = get_two_neighboring_numbers(vertical_neighbors, gear_idx)
-            if neighbor_one is not None and neighbor_two is not None:
-                x1, y1 = neighbor_one
-                x2, y2 = neighbor_two
-                # -2 because we added an empty column to our vertical_neighbors,
-                # not present in the full data variable
-                num1 = get_number_surrounding_idx(data, i + x1 - 1, gear_idx + y1 - 1)
-                num2 = get_number_surrounding_idx(data, i + x2 - 1, gear_idx + y2 - 1)
-                if num1 is not None and num2 is not None:
-                    sum += num1 * num2
+            if neighbor_one is None or neighbor_two is None:
+                continue
+
+            x1, y1 = neighbor_one
+            x2, y2 = neighbor_two
+            num1 = get_number_surrounding_idx(data, i + x1 - 1, gear_idx + y1 - 1)
+            num2 = get_number_surrounding_idx(data, i + x2 - 1, gear_idx + y2 - 1)
+            if num1 is not None and num2 is not None:
+                sum += num1 * num2
 
     return sum
 
