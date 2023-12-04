@@ -2,6 +2,10 @@
 input
 input.bonus
 
+# python files
+venv
+env
+
 # don't track AoCTiles scripts or cookie token
 session.cookie
 /AoCTiles
