@@ -30,6 +30,21 @@ Haven't finalized what I want out of this year... Tenatively:
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
+  2023 - 8 ⭐
+</h1>
+<a href="2023/01/day1.py">
+  <img src="assets/2023/01.png" width="161px">
+</a>
+<a href="2023/02/day2.py">
+  <img src="assets/2023/02.png" width="161px">
+</a>
+<a href="2023/03/day3.py">
+  <img src="assets/2023/03.png" width="161px">
+</a>
+<a href="2023/04/day4.sh">
+  <img src="assets/2023/04.png" width="161px">
+</a>
+<h1 align="center">
   2022 - 26 ⭐
 </h1>
 <a href="2022/01/soln_calories.py">
