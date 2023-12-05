@@ -1,6 +1,7 @@
 alias n := new
 alias d := download
 alias s := solve
+alias w := watch
 
 new problem year="2023" lang="py":
     #!/usr/bin/env bash
@@ -35,3 +36,6 @@ submit problem year="2023" part="1":
     #!/usr/bin/env bash
     set -euxo pipefail
     echo "not implemented"
+
+watch problem year="2023":
+    find "{{year}}/{{problem}}" | entr -s "just s {{problem}}"

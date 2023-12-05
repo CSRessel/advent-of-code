@@ -1,6 +1,7 @@
 from collections.abc import Callable
-from typing import Iterable, List, Optional
 from itertools import chain, groupby
+from pathlib import Path
+from typing import Iterable, List, Optional
 
 DEBUG = False
 
@@ -171,17 +172,19 @@ def part2(input):
 
     return sum
 
+SCRIPT_DIR = Path(__file__).absolute().parent
+
 def main():
     print("Day 3")
     print("Part 1")
     print("Test: ", test1 := part1(TEST))
     assert test1 == 4361
-    print("Answer: ", answer1 := part1(open("input").read()))
+    print("Answer: ", answer1 := part1(open(SCRIPT_DIR / "input").read()))
     assert answer1 == 519444
     print("Part 2")
     print("Test: ", test2 := part2(TEST))
     assert test2 == 467835
-    print("Answer: ", answer2 := part2(open("input").read()))
+    print("Answer: ", answer2 := part2(open(SCRIPT_DIR / "input").read()))
     assert answer2 == 74528807
 
 if __name__ == "__main__":
