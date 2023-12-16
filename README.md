@@ -16,10 +16,10 @@ ___( \ __.\-,),,)________________
 
 Haven't finalized what I want out of this year... Tenatively:
 
-- [ ] Familiarize with some [more interesting Python language features](https://www.youtube.com/playlist?list=PLdQruVCKu10k5p2lK04KJuKEeUuXOeH6F)
+- [ ] Familiarize with some more [interesting](https://www.youtube.com/watch?v=D1twn9kLmYg) [Python](https://www.youtube.com/watch?v=m6asOJmfGpY) [language](https://www.youtube.com/playlist?list=PLdQruVCKu10k5p2lK04KJuKEeUuXOeH6F) [features](https://www.youtube.com/watch?v=T-TwcmT6Rcw)
 - [x] Re-famliarize with some Python type hints and type checking
-- [ ] Setup a convenient command runner for scaffolding/testing/solving, decoupled from languages (like [`just`](https://just.systems/) or [`task`](https://taskfile.dev/))
-- [ ] Solve 50 ⭐'s (not sure if I'm that invested or not, we'll see)
+- [x] Setup a convenient command runner for scaffolding/testing/solving, decoupled from languages (like [`just`](https://just.systems/) or [`task`](https://taskfile.dev/))
+- [ ] ~~Solve 50 ⭐'s (not sure if I'm that invested or not, we'll see)~~
 
 # [Advent of Code 2022](https://adventofcode.com/2022/)
 
