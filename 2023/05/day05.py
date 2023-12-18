@@ -41,6 +41,7 @@ humidity-to-location map:
 56 93 4
 """
 
+
 def get_minimum_mapped_target(mapped_targets: List[int], mappings: List[str]) -> int:
     for mapping in mappings:
         header, *lines = mapping.strip().split("\n")
@@ -52,7 +53,6 @@ def get_minimum_mapped_target(mapped_targets: List[int], mappings: List[str]) ->
             for i, mapped_target in enumerate(mapped_targets):
                 if source_start <= mapped_target < source_start + length and i not in mapped:
                     mapped.add(i)
-                    #print(f"[{i = }] mapping {mapped_target} to {dest_start + (mapped_target - source_start)}") if DEBUG else None
                     mapped_targets[i] = dest_start + (mapped_target - source_start)
 
     return min(mapped_targets)
@@ -62,6 +62,7 @@ def part1(input: str):
     targetline, *mappings = input.split("\n\n")
     targets: List[int] = list(map(int, targetline.strip().split()[1:]))
     return get_minimum_mapped_target(targets, mappings)
+
 
 def part2(input: str):
     reduce(lambda x, y: x * y, [1, 2, 3])
@@ -81,11 +82,20 @@ def part2(input: str):
                     if source_start <= target_start < source_start + mapping_length:
                         # if the mapping intersects our current target interval
                         # then we emit the newly mapped range
-                        mapping_length = min(mapping_length - (target_start - source_start), target_length)
-                        yield (dest_start + target_start - source_start, mapping_length)
+                        mapping_length = min(
+                            mapping_length - (target_start - source_start),
+                            target_length,
+                        )
+                        yield (
+                            dest_start + target_start - source_start,
+                            mapping_length,
+                        )
                         # then update the target interval to be just the remainder of the interval
-                        # and break the for loop so we can start again looking for another mapping intersecting the remainder interval
-                        # (unless the remainder length is non-positive, in which case we're finished with this target interval)
+                        # and break the for loop so we can start again looking for another mapping
+                        # intersecting the remainder interval
+                        #
+                        # unless the remainder length is non-positive,
+                        # in which case we're finished with this target interval
                         target_start += mapping_length
                         target_length -= mapping_length
                         break
@@ -96,6 +106,7 @@ def part2(input: str):
 
     # note: the iterable args need to be re-packed as generators for the typing of the reduce function to work
     return min(reduce(lookup, (m for m in mappings), (tr for tr in target_intervals)))[0]
+
 
 def main():
     print("Part 1")
@@ -109,5 +120,6 @@ def main():
     print("Answer: ", answer2 := part2(open(SCRIPT_DIR / "input").read()))
     assert answer2 == 108956227
 
+
 if __name__ == "__main__":
-  main()
+    main()
