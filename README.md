@@ -14,15 +14,13 @@ ___( \ __.\-,),,)________________
 
 # [Advent of Code 2023](https://adventofcode.com/)
 
-Haven't finalized what I want out of this year... Tenatively:
-
-- [ ] Familiarize with some more [interesting](https://www.youtube.com/watch?v=D1twn9kLmYg) [Python](https://www.youtube.com/watch?v=m6asOJmfGpY) [language](https://www.youtube.com/playlist?list=PLdQruVCKu10k5p2lK04KJuKEeUuXOeH6F) [features](https://www.youtube.com/watch?v=T-TwcmT6Rcw)
+- [x] Familiarize with some more [interesting](https://www.youtube.com/watch?v=D1twn9kLmYg) [Python](https://www.youtube.com/watch?v=m6asOJmfGpY) [language](https://www.youtube.com/playlist?list=PLdQruVCKu10k5p2lK04KJuKEeUuXOeH6F) [features](https://www.youtube.com/watch?v=T-TwcmT6Rcw)
     - generators: [day 5](2023/05/day05.py)
 - [x] Re-famliarize with some Python type hints and type checking
     - fully typed: [day 3](2023/05/day03.py) and [day 5](2023/05/day05.py)
     - `pyright 2023/**/*.py`
 - [x] Setup a convenient command runner for scaffolding/testing/solving, decoupled from languages (like [`just`](https://just.systems/) or [`task`](https://taskfile.dev/))
-- [ ] ~~Solve 50 ⭐'s (not sure if I'm that invested or not, we'll see)~~
+- [ ] ~~Solve 50 ⭐'s (not sure if I'm that invested this year...)~~
 
 # [Advent of Code 2022](https://adventofcode.com/2022/)
 
